@@ -29,7 +29,8 @@ public class LocalAuthService {
         }
 
         HashedPassword hashedPassword = passwordPolicy.apply(spec.password());
-        return LocalAuth.register(spec.email(), hashedPassword);
+        LocalAuth register = LocalAuth.register(spec.email(), hashedPassword);
+        return register;
     }
 
     public void authenticate(UserLoginSpec spec) {

@@ -35,23 +35,23 @@ public class AuthCreatedEvent extends BaseDomainEvent implements CrudEvent {
         return CrudType.CREATED;
     }
 
-    public String getEmail() {
+    public String email() {
         return email;
     }
 
-    public String getName() {
+    public String name() {
         return name;
     }
 
-    public String getRole() {
+    public String role() {
         return role;
     }
 
-    public List<Long> getTagIds() {
+    public List<Long> tagIds() {
         return tagIds;
     }
 
-    public String getLevel() {
+    public String level() {
         return level;
     }
 }
