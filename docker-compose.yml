@@ -1,9 +1,9 @@
 version: "3.9"
-name: lxp-content-local
+name: lxp-auth-local
 services:
   mysql:
     image: mysql:8.0
-    container_name: lxp-content-mysql
+    container_name: lxp-auth-mysql
     command:
       - --default-authentication-plugin=mysql_native_password
       - --skip-ssl
@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
   redis:
     image: redis:7-alpine
-    container_name: lxp-content-redis
+    container_name: lxp-auth-redis
     ports:
       - "6379:6379"
     volumes:
