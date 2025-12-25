@@ -3,14 +3,14 @@
   "exchanges": [
     {
       "name": "auth.events",
-      "vhost": "auth",
+      "vhost": "/",
       "type": "topic",
       "durable": true,
       "auto_delete": false
     },
     {
       "name": "user.events",
-      "vhost": "auth",
+      "vhost": "/",
       "type": "topic",
       "durable": true,
       "auto_delete": false
@@ -19,13 +19,13 @@
   "queues": [
     {
       "name": "auth-events.user-registered",
-      "vhost": "auth",
+      "vhost": "/",
       "durable": true,
       "auto_delete": false
     },
     {
       "name": "user-events.user-creation-failed",
-      "vhost": "auth",
+      "vhost": "/",
       "durable": true,
       "auto_delete": false
     }
@@ -33,14 +33,14 @@
   "bindings": [
     {
       "source": "auth.events",
-      "vhost": "auth",
+      "vhost": "/",
       "destination": "auth-events.user-registered",
       "destination_type": "queue",
       "routing_key": "UserRegisteredIntegrationEvent"
     },
     {
       "source": "user.events",
-      "vhost": "auth",
+      "vhost": "/",
       "destination": "user-events.user-creation-failed",
       "destination_type": "queue",
       "routing_key": "UserCreationFailedIntegrationEvent"
