@@ -12,8 +12,8 @@ public class AuthCreatedEvent extends BaseDomainEvent implements CrudEvent {
     private final List<Long> tagIds;
     private final String level;
 
-    public AuthCreatedEvent(String aggregateId, String email, String name, String role, List<Long> tagIds, String level) {
-        super(aggregateId);
+    public AuthCreatedEvent(String userId, String email, String name, String role, List<Long> tagIds, String level) {
+        super(userId);
         this.email = email;
         this.name = name;
         this.role = role;
@@ -21,8 +21,8 @@ public class AuthCreatedEvent extends BaseDomainEvent implements CrudEvent {
         this.level = level;
     }
 
-    public AuthCreatedEvent(String eventId, String aggregateId, LocalDateTime occurredAt, String email, String name, String role, List<Long> tagIds, String level) {
-        super(eventId, aggregateId, occurredAt);
+    public AuthCreatedEvent(String eventId, String userId, LocalDateTime occurredAt, String email, String name, String role, List<Long> tagIds, String level) {
+        super(eventId, userId, occurredAt);
         this.email = email;
         this.name = name;
         this.role = role;
