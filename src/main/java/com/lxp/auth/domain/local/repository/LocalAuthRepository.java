@@ -13,4 +13,6 @@ public interface LocalAuthRepository {
 
     void save(LocalAuth localAuth);
 
+    void remove(LocalAuth localAuth);
+
 }
