@@ -27,7 +27,17 @@ public enum AuthErrorCode implements ErrorCode {
     /**
      * AUTH_005: 필수 인증 정보 누락
      */
-    MISSING_REQUIRED_FIELD("BAD_REQUEST", "AUTH_005", "필수 인증 정보(ID/PW)가 누락되었습니다.");
+    MISSING_REQUIRED_FIELD("BAD_REQUEST", "AUTH_005", "필수 인증 정보(ID/PW)가 누락되었습니다."),
+
+    /**
+     * AUTH_006: 서버 에러
+     */
+    INTERNAL_ERROR("INTERNAL_SERVER_ERROR", "AUTH_006", "Internal Server Error."),
+
+    /**
+     * AUTH_007: 이벤트 퍼블리싱 실패
+     */
+    EVENT_PUBLISH_FAILED("INTERNAL_SERVER_ERROR", "AUTH_007", "이벤트 브로커로 메시지를 전송하지 못했습니다.");
 
     private final String group;
     private final String code;

@@ -17,6 +17,6 @@ public class UserRegisteredIntegrationEvent extends BaseIntegrationEvent {
         this.data = payload;
     }
 
-    record Payload(String userId, String name, String email, String role, List<Long> tagIds, String level) {
+    public record Payload(String userId, String name, String email, String role, List<Long> tagIds, String level) {
     }
 }

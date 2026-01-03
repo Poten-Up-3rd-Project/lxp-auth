@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
   redis:
     image: redis:7-alpine
-    container_name: lxp-auth-redis
+    container_name: lxp-content-redis
     ports:
       - "6379:6379"
     volumes:
@@ -36,13 +36,14 @@ services:
   rabbitmq:
     image: rabbitmq:3.13-management
     container_name: lxp-auth-rabbitmq
+    labels:
+      - "org.springframework.boot.service-connection=false"
     ports:
       - "5672:5672"     # AMQP
       - "15672:15672"   # Management UI
     environment:
       RABBITMQ_DEFAULT_USER: lxp
       RABBITMQ_DEFAULT_PASS: lxp
-      RABBITMQ_DEFAULT_VHOST: auth
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
       # 통합 로컬 대비 (지금은 없어도 됨)
