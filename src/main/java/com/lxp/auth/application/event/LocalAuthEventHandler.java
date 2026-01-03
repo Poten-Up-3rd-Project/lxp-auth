@@ -24,7 +24,9 @@ public class LocalAuthEventHandler implements DomainEventHandler<AuthCreatedEven
         log.info("Handling AuthCreatedEvent: userId={}", event.getAggregateId());
         try {
             integrationEventPublisher.publish(integrationEventMapper.toIntegration(event));
-            log.info("Successfully published Integration Event for userId={}", event.getAggregateId());
+            log.info("Successfully published Integration Event for userId={}, eventId={}, eventType{}",
+                event.getAggregateId(), event.getEventId(), event.getEventType()
+            );
         } catch (AmqpException e) {
             log.error("Failed to publish Integration Event to RabbitMQ for userId={}", event.getAggregateId(), e);
             throw new AuthException(AuthErrorCode.EVENT_PUBLISH_FAILED, "Failed to publish user registration event", e);
