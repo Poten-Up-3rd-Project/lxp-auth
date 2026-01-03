@@ -1,7 +1,7 @@
 package com.lxp.auth.infrastructure.messaging.consumer;
 
 import com.lxp.auth.application.event.UserCreationFailedIntegrationEvent;
-import com.lxp.auth.application.in.usecase.LocalAuthRemoveUseCase;
+import com.lxp.auth.application.port.in.usecase.LocalAuthRemoveUseCase;
 import com.lxp.auth.infrastructure.messaging.mapper.AuthIntegrationMapper;
 import com.lxp.common.application.port.in.IntegrationEventHandler;
 import lombok.RequiredArgsConstructor;

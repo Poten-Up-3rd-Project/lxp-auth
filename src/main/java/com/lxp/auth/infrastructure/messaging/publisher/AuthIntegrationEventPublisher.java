@@ -3,9 +3,12 @@ package com.lxp.auth.infrastructure.messaging.publisher;
 import com.lxp.common.application.event.IntegrationEvent;
 import com.lxp.common.application.port.out.IntegrationEventPublisher;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class AuthIntegrationEventPublisher implements IntegrationEventPublisher {
@@ -21,6 +24,18 @@ public class AuthIntegrationEventPublisher implements IntegrationEventPublisher 
 
     @Override
     public void publish(String topic, IntegrationEvent integrationEvent) {
-        rabbitTemplate.convertAndSend(topic, integrationEvent.getEventType(), integrationEvent);
+        try {
+            rabbitTemplate.convertAndSend(topic, integrationEvent.getEventType(), integrationEvent);
+            log.info(
+                "Successfully published integration event: eventId={}, eventType={}, exchange={}",
+                integrationEvent.getEventId(), integrationEvent.getEventType(), topic
+            );
+        } catch (AmqpException e) {
+            log.error(
+                "Failed to publish integration event: eventId={}, eventType={}, exchange={}",
+                integrationEvent.getEventId(), integrationEvent.getEventType(), topic
+            );
+            throw e;
+        }
     }
 }
