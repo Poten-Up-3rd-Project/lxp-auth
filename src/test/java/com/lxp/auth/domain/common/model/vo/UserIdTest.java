@@ -1,11 +1,13 @@
 package com.lxp.auth.domain.common.model.vo;
 
+import com.lxp.auth.domain.common.exception.AuthException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("UserId VO 테스트")
 class UserIdTest {
@@ -58,10 +60,10 @@ class UserIdTest {
         UUID nullUuid = null;
 
         // when: UserId를 생성하면
-        // then: NullPointerException이 발생한다
+        // then: AuthException이 발생한다
         assertThatThrownBy(() -> UserId.of(nullUuid))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessageContaining("userId의 value는 null일 수 없습니다.");
+            .isInstanceOf(AuthException.class)
+            .hasMessageContaining("userId의 value는 null일 수 없습니다.");
     }
 
     @Test
@@ -88,7 +90,7 @@ class UserIdTest {
         // when: UserId를 생성하면
         // then: IllegalArgumentException이 발생한다
         assertThatThrownBy(() -> UserId.of(invalidUuidString))
-                .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

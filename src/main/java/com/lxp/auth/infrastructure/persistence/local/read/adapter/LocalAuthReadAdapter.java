@@ -1,7 +1,7 @@
 package com.lxp.auth.infrastructure.persistence.local.read.adapter;
 
-import com.lxp.auth.application.out.AuthQueryPort;
-import com.lxp.auth.domain.local.model.entity.LocalAuth;
+import com.lxp.auth.application.port.out.AuthQueryPort;
+import com.lxp.auth.application.port.out.query.AuthView;
 import com.lxp.auth.infrastructure.persistence.local.read.repository.LocalAuthReadRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,12 +16,12 @@ public class LocalAuthReadAdapter implements AuthQueryPort {
     private final LocalAuthReadMapper localAuthReadMapper;
 
     @Override
-    public Optional<LocalAuth> findByLoginIdentifier(String loginIdentifier) {
-        return localAuthReadRepository.findByLoginIdentifier(loginIdentifier).map(localAuthReadMapper::toDomain);
+    public Optional<AuthView> findByLoginIdentifier(String loginIdentifier) {
+        return localAuthReadRepository.findByLoginIdentifier(loginIdentifier).map(localAuthReadMapper::toView);
     }
 
     @Override
-    public Optional<LocalAuth> findByUserId(String userId) {
-        return localAuthReadRepository.findByIdWithProjection(userId).map(localAuthReadMapper::toDomain);
+    public Optional<AuthView> findByUserId(String userId) {
+        return localAuthReadRepository.findByIdWithProjection(userId).map(localAuthReadMapper::toView);
     }
 }

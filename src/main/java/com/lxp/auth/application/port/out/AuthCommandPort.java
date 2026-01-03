@@ -1,4 +1,4 @@
-package com.lxp.auth.application.out;
+package com.lxp.auth.application.port.out;
 
 import com.lxp.auth.domain.local.model.entity.LocalAuth;
 

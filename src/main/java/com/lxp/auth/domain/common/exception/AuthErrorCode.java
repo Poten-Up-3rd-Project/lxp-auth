@@ -37,7 +37,17 @@ public enum AuthErrorCode implements ErrorCode {
     /**
      * AUTH_007: 이벤트 퍼블리싱 실패
      */
-    EVENT_PUBLISH_FAILED("INTERNAL_SERVER_ERROR", "AUTH_007", "이벤트 브로커로 메시지를 전송하지 못했습니다.");
+    EVENT_PUBLISH_FAILED("INTERNAL_SERVER_ERROR", "AUTH_007", "이벤트 브로커로 메시지를 전송하지 못했습니다."),
+
+    /**
+     * AUTH_008: 사용자 생성 실패 (외부 서비스)
+     */
+    USER_CREATION_FAILED("INTERNAL_SERVER_ERROR", "AUTH_008", "사용자 생성에 실패했습니다."),
+
+    /**
+     * AUTH_009: 외부 서비스 통신 오류
+     */
+    EXTERNAL_SERVICE_ERROR("INTERNAL_SERVER_ERROR", "AUTH_009", "외부 서비스 연동 중 오류가 발생했습니다.");
 
     private final String group;
     private final String code;

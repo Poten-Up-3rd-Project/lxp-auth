@@ -1,9 +1,11 @@
 package com.lxp.auth.domain.local.model.vo;
 
+import com.lxp.auth.domain.common.exception.AuthException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("HashedPassword VO 테스트")
 class HashedPasswordTest {
@@ -28,10 +30,10 @@ class HashedPasswordTest {
         // given: null 값이 주어지면
 
         // when: HashedPassword를 생성하면
-        // then: IllegalArgumentException이 발생한다
+        // then: AuthException이 발생한다
         assertThatThrownBy(() -> new HashedPassword(null))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("HashedPassword value cannot be empty.");
+            .isInstanceOf(AuthException.class)
+            .hasMessageContaining("HashedPassword value cannot be empty.");
     }
 
     @Test
@@ -41,10 +43,10 @@ class HashedPasswordTest {
         String emptyValue = "";
 
         // when: HashedPassword를 생성하면
-        // then: IllegalArgumentException이 발생한다
+        // then: AuthException이 발생한다
         assertThatThrownBy(() -> new HashedPassword(emptyValue))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("HashedPassword value cannot be empty.");
+            .isInstanceOf(AuthException.class)
+            .hasMessageContaining("HashedPassword value cannot be empty.");
     }
 
     @Test
@@ -54,10 +56,10 @@ class HashedPasswordTest {
         String blankValue = "   ";
 
         // when: HashedPassword를 생성하면
-        // then: IllegalArgumentException이 발생한다
+        // then: AuthException이 발생한다
         assertThatThrownBy(() -> new HashedPassword(blankValue))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("HashedPassword value cannot be empty.");
+            .isInstanceOf(AuthException.class)
+            .hasMessageContaining("HashedPassword value cannot be empty.");
     }
 
     @Test

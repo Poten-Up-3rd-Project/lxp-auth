@@ -14,9 +14,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -63,8 +63,8 @@ class LocalAuthServiceTest {
         // when: LocalAuth 생성을 요청하면
         // then: AuthException이 발생한다
         assertThatThrownBy(() -> localAuthService.create(null))
-                .isInstanceOf(AuthException.class)
-                .hasMessageContaining("사용자 필수 정보가 없습니다.");
+            .isInstanceOf(AuthException.class)
+            .hasMessageContaining("사용자 필수 정보가 없습니다.");
     }
 
     @Test
@@ -81,7 +81,7 @@ class LocalAuthServiceTest {
         // when: 인증을 요청하면
         // then: 예외가 발생하지 않는다
         assertThatCode(() -> localAuthService.authenticate(spec))
-                .doesNotThrowAnyException();
+            .doesNotThrowAnyException();
         verify(passwordPolicy).isMatch(password, hashedPassword);
     }
 
@@ -99,7 +99,7 @@ class LocalAuthServiceTest {
         // when: 인증을 요청하면
         // then: LoginFailureException이 발생한다
         assertThatThrownBy(() -> localAuthService.authenticate(spec))
-                .isInstanceOf(LoginFailureException.class);
+            .isInstanceOf(LoginFailureException.class);
         verify(passwordPolicy).isMatch(password, hashedPassword);
     }
 
@@ -111,6 +111,6 @@ class LocalAuthServiceTest {
         // when: 인증을 요청하면
         // then: AuthException이 발생한다
         assertThatThrownBy(() -> localAuthService.authenticate(null))
-                .isInstanceOf(AuthException.class);
+            .isInstanceOf(AuthException.class);
     }
 }
