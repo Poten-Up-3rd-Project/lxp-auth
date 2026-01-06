@@ -30,9 +30,9 @@ public class PassportVerifier {
                 .getPayload();
 
             return new PassportClaims(
-                claims.get("userId").toString(),
-                Arrays.asList(claims.get("roles").toString().split(",")),
-                claims.get("traceId").toString()
+                claims.get("uid").toString(),
+                Arrays.asList(claims.get("rol").toString().split(",")),
+                claims.get("tid").toString()
             );
 
         } catch (ExpiredJwtException e) {

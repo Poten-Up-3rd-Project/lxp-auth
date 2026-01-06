@@ -7,6 +7,7 @@ import com.lxp.auth.domain.common.exception.AuthErrorCode;
 import com.lxp.auth.domain.common.exception.AuthException;
 import com.lxp.auth.infrastructure.web.external.client.UserServiceFeignClient;
 import com.lxp.auth.infrastructure.web.external.dto.UserResponse;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -20,24 +21,26 @@ public class UserServiceAdapter implements UserServicePort {
     private final UserServiceMapper userServiceMapper;
 
     @Override
+    @CircuitBreaker(name = "userService", fallbackMethod = "createUserFallback")
     public void createUser(CreateUserCommand command) {
-        try {
-            userServiceFeignClient.createUser(userServiceMapper.createUserRequest(command));
-            log.info("Successfully created user in user-service: userId={}", command.userId());
-        } catch (Exception e) {
-            log.error("Failed to create user in user-service: userId={}", command.userId(), e);
-            throw new AuthException(AuthErrorCode.INTERNAL_ERROR, "Failed to create user", e);
-        }
+        userServiceFeignClient.createUser(userServiceMapper.createUserRequest(command));
+        log.info("Successfully created user in user-service: userId={}", command.userId());
     }
 
     @Override
+    @CircuitBreaker(name = "userService", fallbackMethod = "getUserInfoFallback")
     public UserInfo getUserInfo(String userId) {
-        try {
-            UserResponse response = userServiceFeignClient.getUserInfo(userId);
-            return userServiceMapper.toUserInfo(response);
-        } catch (Exception e) {
-            log.error("Failed to get user in user-service: userId={}", userId, e);
-            throw new AuthException(AuthErrorCode.INTERNAL_ERROR, "Failed to get user", e);
-        }
+        UserResponse response = userServiceFeignClient.getUserInfo(userId);
+        return userServiceMapper.toUserInfo(response);
+    }
+
+    private void createUserFallback(CreateUserCommand command, Throwable t) {
+        log.warn("CircuitBreaker fallback - createUser: userId={}", command.userId(), t);
+        throw new AuthException(AuthErrorCode.EXTERNAL_SERVICE_ERROR, "User service is temporarily unavailable", t);
+    }
+
+    private UserInfo getUserInfoFallback(String userId, Throwable t) {
+        log.warn("CircuitBreaker fallback - getUserInfo: userId={}", userId, t);
+        throw new AuthException(AuthErrorCode.EXTERNAL_SERVICE_ERROR, "User service is temporarily unavailable", t);
     }
 }
