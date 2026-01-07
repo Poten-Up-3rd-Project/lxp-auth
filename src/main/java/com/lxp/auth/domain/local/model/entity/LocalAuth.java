@@ -1,10 +1,9 @@
 package com.lxp.auth.domain.local.model.entity;
 
 import com.lxp.auth.domain.common.model.vo.UserId;
+import com.lxp.auth.domain.common.support.AuthGuard;
 import com.lxp.auth.domain.local.model.vo.HashedPassword;
 import com.lxp.common.domain.event.AggregateRoot;
-
-import java.util.Objects;
 
 public class LocalAuth extends AggregateRoot<UserId> {
 
@@ -13,9 +12,9 @@ public class LocalAuth extends AggregateRoot<UserId> {
     private HashedPassword hashedPassword;
 
     private LocalAuth(UserId id, String loginIdentifier, HashedPassword hashedPassword) {
-        this.id = Objects.requireNonNull(id, "userId는 null일 수 없습니다.");
-        this.loginIdentifier = Objects.requireNonNull(loginIdentifier, "loginIdentifier는 null일 수 없습니다.");
-        this.hashedPassword = Objects.requireNonNull(hashedPassword, "hashedPassword는 null일 수 없습니다.");
+        this.id = AuthGuard.requireNonNull(id, "userId는 null일 수 없습니다.");
+        this.loginIdentifier = AuthGuard.requireNonNull(loginIdentifier, "loginIdentifier는 null일 수 없습니다.");
+        this.hashedPassword = AuthGuard.requireNonNull(hashedPassword, "hashedPassword는 null일 수 없습니다.");
     }
 
     public static LocalAuth register(String loginIdentifier, HashedPassword hashedPassword) {
@@ -31,7 +30,7 @@ public class LocalAuth extends AggregateRoot<UserId> {
     }
 
     public void updatePassword(final HashedPassword newHashedPassword) {
-        this.hashedPassword = Objects.requireNonNull(newHashedPassword, "비밀번호는 null일 수 없습니다.");
+        this.hashedPassword = AuthGuard.requireNonNull(newHashedPassword, "비밀번호는 null일 수 없습니다.");
     }
 
     public boolean matchesId(UserId id) {

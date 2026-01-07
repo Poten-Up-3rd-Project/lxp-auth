@@ -1,13 +1,13 @@
 package com.lxp.auth.domain.local.model.entity;
 
+import com.lxp.auth.domain.common.exception.AuthException;
 import com.lxp.auth.domain.common.model.vo.UserId;
 import com.lxp.auth.domain.local.model.vo.HashedPassword;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("LocalAuth 엔티티 테스트")
 class LocalAuthTest {
@@ -55,10 +55,10 @@ class LocalAuthTest {
         HashedPassword hashedPassword = new HashedPassword("hashedPassword123");
 
         // when: LocalAuth를 생성하면
-        // then: NullPointerException이 발생한다
+        // then: AuthException이 발생한다
         assertThatThrownBy(() -> LocalAuth.of(null, loginIdentifier, hashedPassword))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessageContaining("userId는 null일 수 없습니다.");
+            .isInstanceOf(AuthException.class)
+            .hasMessageContaining("userId는 null일 수 없습니다.");
     }
 
     @Test
@@ -69,10 +69,10 @@ class LocalAuthTest {
         HashedPassword hashedPassword = new HashedPassword("hashedPassword123");
 
         // when: LocalAuth를 생성하면
-        // then: NullPointerException이 발생한다
+        // then: AuthException이 발생한다
         assertThatThrownBy(() -> LocalAuth.of(userId, null, hashedPassword))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessageContaining("loginIdentifier는 null일 수 없습니다.");
+            .isInstanceOf(AuthException.class)
+            .hasMessageContaining("loginIdentifier는 null일 수 없습니다.");
     }
 
     @Test
@@ -83,10 +83,10 @@ class LocalAuthTest {
         String loginIdentifier = "test@example.com";
 
         // when: LocalAuth를 생성하면
-        // then: NullPointerException이 발생한다
+        // then: AuthException이 발생한다
         assertThatThrownBy(() -> LocalAuth.of(userId, loginIdentifier, null))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessageContaining("hashedPassword는 null일 수 없습니다.");
+            .isInstanceOf(AuthException.class)
+            .hasMessageContaining("hashedPassword는 null일 수 없습니다.");
     }
 
     @Test
@@ -96,7 +96,7 @@ class LocalAuthTest {
         String loginIdentifier = "test@example.com";
         HashedPassword originalPassword = new HashedPassword("originalPassword123");
         LocalAuth localAuth = LocalAuth.register(loginIdentifier, originalPassword);
-        
+
         HashedPassword newPassword = new HashedPassword("newPassword456");
 
         // when: 비밀번호를 업데이트하면
@@ -116,10 +116,10 @@ class LocalAuthTest {
         LocalAuth localAuth = LocalAuth.register(loginIdentifier, hashedPassword);
 
         // when: null 비밀번호로 업데이트하면
-        // then: NullPointerException이 발생한다
+        // then: AuthException이 발생한다
         assertThatThrownBy(() -> localAuth.updatePassword(null))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessageContaining("비밀번호는 null일 수 없습니다.");
+            .isInstanceOf(AuthException.class)
+            .hasMessageContaining("비밀번호는 null일 수 없습니다.");
     }
 
     @Test

@@ -37,25 +37,6 @@ public class RedisTokenRevocationAdapter implements TokenRevocationPolicy {
         }
     }
 
-    @Override
-    public boolean isTokenBlacklisted(String token) {
-        String key = createKey(token);
-        boolean result = false;
-
-        try {
-            Boolean exists = redisTemplate.hasKey(key);
-
-            if (Objects.nonNull(exists) && exists) {
-                log.info("Token is blacklisted. Key: {}", key);
-                result = true;
-            }
-        } catch (Exception e) {
-            log.error("Failed to check token blacklist status in Redis. Key: {}", key, e);
-        }
-
-        return result;
-    }
-
     private String createKey(String token) {
         return TOKEN_REVOCATION_KEY + token;
     }

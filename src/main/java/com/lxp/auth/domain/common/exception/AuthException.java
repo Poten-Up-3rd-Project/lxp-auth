@@ -1,7 +1,6 @@
 package com.lxp.auth.domain.common.exception;
 
 import com.lxp.common.domain.exception.DomainException;
-import com.lxp.common.domain.exception.ErrorCode;
 
 public class AuthException extends DomainException {
 
@@ -17,7 +16,7 @@ public class AuthException extends DomainException {
         super(errorCode, message);
     }
 
-    public AuthException(ErrorCode errorCode, String message, Throwable cause) {
+    public AuthException(AuthErrorCode errorCode, String message, Throwable cause) {
         super(errorCode, message, cause);
     }
 }

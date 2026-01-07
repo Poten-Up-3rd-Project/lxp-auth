@@ -1,13 +1,11 @@
 package com.lxp.auth.domain.local.model.vo;
 
-import java.util.Objects;
+import com.lxp.auth.domain.common.support.AuthGuard;
 
 public record HashedPassword(String value) {
 
     public HashedPassword {
-        if (Objects.isNull(value) || value.isBlank()) {
-            throw new IllegalArgumentException("HashedPassword value cannot be empty.");
-        }
+        AuthGuard.requireNonBlank(value, "HashedPassword value cannot be empty.");
     }
 
 }
