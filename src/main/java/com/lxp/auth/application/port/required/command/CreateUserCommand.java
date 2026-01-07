@@ -1,4 +1,4 @@
-package com.lxp.auth.application.port.out.command;
+package com.lxp.auth.application.port.required.command;
 
 import java.util.List;
 

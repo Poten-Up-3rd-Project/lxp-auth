@@ -1,9 +1,9 @@
 package com.lxp.auth.application.service;
 
-import com.lxp.auth.application.port.in.command.LocalAuthRegisterCommand;
-import com.lxp.auth.application.port.in.usecase.LocalAuthRegisterUseCase;
-import com.lxp.auth.application.port.out.AuthCommandPort;
-import com.lxp.auth.application.port.out.UserServicePort;
+import com.lxp.auth.application.port.provided.command.LocalAuthRegisterCommand;
+import com.lxp.auth.application.port.provided.usecase.LocalAuthRegisterUseCase;
+import com.lxp.auth.application.port.required.AuthCommandPort;
+import com.lxp.auth.application.port.required.UserServicePort;
 import com.lxp.auth.application.service.mapper.LocalAuthSpecMapper;
 import com.lxp.auth.domain.common.exception.AuthErrorCode;
 import com.lxp.auth.domain.common.exception.AuthException;
@@ -25,7 +25,7 @@ public class LocalAuthRegisterService implements LocalAuthRegisterUseCase {
     private final LocalAuthSpecMapper localAuthSpecMapper;
 
     @Override
-    public Void execute(LocalAuthRegisterCommand command) {
+    public void execute(LocalAuthRegisterCommand command) {
         LocalAuth localAuth = localAuthService.create(localAuthSpecMapper.toAuthCreateSpec(command));
         authCommandPort.save(localAuth);
 
@@ -37,6 +37,5 @@ public class LocalAuthRegisterService implements LocalAuthRegisterUseCase {
             throw new AuthException(AuthErrorCode.EXTERNAL_SERVICE_ERROR, "Failed to create user", e);
         }
 
-        return null;
     }
 }

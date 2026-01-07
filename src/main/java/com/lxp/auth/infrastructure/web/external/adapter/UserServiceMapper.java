@@ -1,7 +1,7 @@
 package com.lxp.auth.infrastructure.web.external.adapter;
 
-import com.lxp.auth.application.port.out.command.CreateUserCommand;
-import com.lxp.auth.application.port.out.query.UserInfo;
+import com.lxp.auth.application.port.required.command.CreateUserCommand;
+import com.lxp.auth.application.port.required.query.UserInfo;
 import com.lxp.auth.infrastructure.web.external.dto.CreateUserRequest;
 import com.lxp.auth.infrastructure.web.external.dto.UserResponse;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,7 @@
 package com.lxp.auth.infrastructure.persistence.local.read.adapter;
 
-import com.lxp.auth.application.port.out.AuthQueryPort;
-import com.lxp.auth.application.port.out.query.AuthView;
+import com.lxp.auth.application.port.required.AuthQueryPort;
+import com.lxp.auth.application.port.required.query.AuthView;
 import com.lxp.auth.infrastructure.persistence.local.read.repository.LocalAuthReadRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

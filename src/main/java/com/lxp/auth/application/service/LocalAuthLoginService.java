@@ -1,11 +1,11 @@
 package com.lxp.auth.application.service;
 
-import com.lxp.auth.application.port.in.command.LocalAuthLoginCommand;
-import com.lxp.auth.application.port.in.usecase.LocalAuthLoginUseCase;
-import com.lxp.auth.application.port.out.AuthQueryPort;
-import com.lxp.auth.application.port.out.UserServicePort;
-import com.lxp.auth.application.port.out.query.UserInfo;
-import com.lxp.auth.application.port.out.query.AuthView;
+import com.lxp.auth.application.port.provided.command.LocalAuthLoginCommand;
+import com.lxp.auth.application.port.provided.usecase.LocalAuthLoginUseCase;
+import com.lxp.auth.application.port.required.AuthQueryPort;
+import com.lxp.auth.application.port.required.UserServicePort;
+import com.lxp.auth.application.port.required.query.UserInfo;
+import com.lxp.auth.application.port.required.query.AuthView;
 import com.lxp.auth.domain.common.exception.EmailNotFoundException;
 import com.lxp.auth.domain.common.model.vo.AuthTokenInfo;
 import com.lxp.auth.domain.common.model.vo.TokenClaims;

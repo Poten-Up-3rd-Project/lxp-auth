@@ -1,6 +1,6 @@
 package com.lxp.auth.infrastructure.persistence.local.write.adapter;
 
-import com.lxp.auth.application.port.out.AuthCommandPort;
+import com.lxp.auth.application.port.required.AuthCommandPort;
 import com.lxp.auth.domain.common.exception.DuplicatedEmailException;
 import com.lxp.auth.domain.local.model.entity.LocalAuth;
 import com.lxp.auth.infrastructure.persistence.local.write.repository.LocalAuthWriteRepository;

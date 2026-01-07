@@ -1,7 +1,6 @@
 package com.lxp.auth.infrastructure.security.jwt.config;
 
-import com.lxp.auth.domain.common.exception.AuthErrorCode;
-import com.lxp.auth.domain.common.exception.AuthException;
+import com.lxp.auth.domain.common.support.AuthGuard;
 import io.jsonwebtoken.security.Keys;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -21,9 +20,7 @@ public class JwtConfig {
 
     @Bean
     public SecretKey jwtSecretKey() {
-        if (secretKey == null || secretKey.isEmpty()) {
-            throw new AuthException(AuthErrorCode.UNAUTHORIZED_ACCESS, "JWT Secret Key must be configured.");
-        }
+        AuthGuard.requireNonBlank(secretKey, "jwt secret key cannot be null or empty");
         return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 

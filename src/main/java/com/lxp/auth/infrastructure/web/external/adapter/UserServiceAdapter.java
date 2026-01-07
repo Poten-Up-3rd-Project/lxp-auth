@@ -1,8 +1,8 @@
 package com.lxp.auth.infrastructure.web.external.adapter;
 
-import com.lxp.auth.application.port.out.UserServicePort;
-import com.lxp.auth.application.port.out.command.CreateUserCommand;
-import com.lxp.auth.application.port.out.query.UserInfo;
+import com.lxp.auth.application.port.required.UserServicePort;
+import com.lxp.auth.application.port.required.command.CreateUserCommand;
+import com.lxp.auth.application.port.required.query.UserInfo;
 import com.lxp.auth.domain.common.exception.AuthErrorCode;
 import com.lxp.auth.domain.common.exception.AuthException;
 import com.lxp.auth.infrastructure.web.external.client.UserServiceFeignClient;

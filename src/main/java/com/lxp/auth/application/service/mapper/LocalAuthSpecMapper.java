@@ -1,7 +1,7 @@
 package com.lxp.auth.application.service.mapper;
 
-import com.lxp.auth.application.port.in.command.LocalAuthRegisterCommand;
-import com.lxp.auth.application.port.out.command.CreateUserCommand;
+import com.lxp.auth.application.port.provided.command.LocalAuthRegisterCommand;
+import com.lxp.auth.application.port.required.command.CreateUserCommand;
 import com.lxp.auth.domain.common.model.vo.UserId;
 import com.lxp.auth.domain.local.service.spec.AuthCreateSpec;
 import org.springframework.stereotype.Component;

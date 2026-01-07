@@ -1,9 +1,9 @@
 package com.lxp.auth.infrastructure.web.internal;
 
-import com.lxp.auth.application.port.in.command.LocalAuthLogoutCommand;
-import com.lxp.auth.application.port.in.usecase.LocalAuthLoginUseCase;
-import com.lxp.auth.application.port.in.usecase.LocalAuthLogoutUseCase;
-import com.lxp.auth.application.port.in.usecase.LocalAuthRegisterUseCase;
+import com.lxp.auth.application.port.provided.command.LocalAuthLogoutCommand;
+import com.lxp.auth.application.port.provided.usecase.LocalAuthLoginUseCase;
+import com.lxp.auth.application.port.provided.usecase.LocalAuthLogoutUseCase;
+import com.lxp.auth.application.port.provided.usecase.LocalAuthRegisterUseCase;
 import com.lxp.auth.domain.common.constants.CookieConstants;
 import com.lxp.auth.domain.common.model.vo.AuthTokenInfo;
 import com.lxp.auth.infrastructure.web.internal.dto.LoginRequest;

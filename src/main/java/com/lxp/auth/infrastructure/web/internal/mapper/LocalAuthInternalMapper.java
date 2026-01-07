@@ -1,7 +1,7 @@
 package com.lxp.auth.infrastructure.web.internal.mapper;
 
-import com.lxp.auth.application.port.in.command.LocalAuthLoginCommand;
-import com.lxp.auth.application.port.in.command.LocalAuthRegisterCommand;
+import com.lxp.auth.application.port.provided.command.LocalAuthLoginCommand;
+import com.lxp.auth.application.port.provided.command.LocalAuthRegisterCommand;
 import com.lxp.auth.infrastructure.web.internal.dto.LoginRequest;
 import com.lxp.auth.infrastructure.web.internal.dto.RegisterRequest;
 import org.springframework.stereotype.Component;

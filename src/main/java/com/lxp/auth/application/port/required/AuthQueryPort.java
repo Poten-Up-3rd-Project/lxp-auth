@@ -1,6 +1,6 @@
-package com.lxp.auth.application.port.out;
+package com.lxp.auth.application.port.required;
 
-import com.lxp.auth.application.port.out.query.AuthView;
+import com.lxp.auth.application.port.required.query.AuthView;
 
 import java.util.Optional;
 
