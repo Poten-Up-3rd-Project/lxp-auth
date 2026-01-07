@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "userService", url = "${services.user-service.url}")
 public interface UserServiceFeignClient {
 
-    @PostMapping("/api-v1/internal/users/users")
+    @PostMapping("/internal/api-v1/users")
     ResponseEntity<Void> createUser(@RequestBody CreateUserRequest request);
 
     @GetMapping("/internal/api-v1/users")
