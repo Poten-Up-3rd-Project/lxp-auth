@@ -1,5 +1,6 @@
 package com.lxp.auth.infrastructure.web.external.passport.support;
 
+import com.lxp.auth.infrastructure.constants.PassportConstants;
 import com.lxp.auth.infrastructure.web.external.passport.config.KeyProperties;
 import com.lxp.auth.infrastructure.web.external.passport.exception.InvalidPassportException;
 import com.lxp.auth.infrastructure.web.external.passport.model.PassportClaims;
@@ -30,9 +31,9 @@ public class PassportVerifier {
                 .getPayload();
 
             return new PassportClaims(
-                claims.get("uid").toString(),
-                Arrays.asList(claims.get("rol").toString().split(",")),
-                claims.get("tid").toString()
+                claims.get(PassportConstants.PASSPORT_USER_ID).toString(),
+                Arrays.asList(claims.get(PassportConstants.PASSPORT_ROLE).toString().split(",")),
+                claims.get(PassportConstants.PASSPORT_TRACE_ID).toString()
             );
 
         } catch (ExpiredJwtException e) {

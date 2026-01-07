@@ -1,4 +1,4 @@
-package com.lxp.auth.domain.common.constants;
+package com.lxp.auth.infrastructure.constants;
 
 /**
  * HTTP Cookie 이름 및 관련 상수 정의
