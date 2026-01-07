@@ -1,13 +1,13 @@
-package com.lxp.auth.infrastructure.web.internal.mapper;
+package com.lxp.auth.infrastructure.web.external.controller;
 
 import com.lxp.auth.application.port.provided.command.LocalAuthLoginCommand;
 import com.lxp.auth.application.port.provided.command.LocalAuthRegisterCommand;
-import com.lxp.auth.infrastructure.web.internal.dto.LoginRequest;
-import com.lxp.auth.infrastructure.web.internal.dto.RegisterRequest;
+import com.lxp.auth.infrastructure.web.external.controller.dto.LoginRequest;
+import com.lxp.auth.infrastructure.web.external.controller.dto.RegisterRequest;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LocalAuthInternalMapper {
+public class LocalAuthExternalMapper {
 
     public LocalAuthLoginCommand localAuthLoginCommand(LoginRequest loginRequest) {
         return new LocalAuthLoginCommand(

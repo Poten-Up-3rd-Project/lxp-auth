@@ -1,7 +1,7 @@
 package com.lxp.auth.infrastructure.web.external.client;
 
-import com.lxp.auth.infrastructure.web.external.dto.CreateUserRequest;
-import com.lxp.auth.infrastructure.web.external.dto.UserResponse;
+import com.lxp.auth.infrastructure.web.external.client.dto.CreateUserRequest;
+import com.lxp.auth.infrastructure.web.external.client.dto.UserResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

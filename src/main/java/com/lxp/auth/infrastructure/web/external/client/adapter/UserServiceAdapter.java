@@ -1,4 +1,4 @@
-package com.lxp.auth.infrastructure.web.external.adapter;
+package com.lxp.auth.infrastructure.web.external.client.adapter;
 
 import com.lxp.auth.application.port.required.UserServicePort;
 import com.lxp.auth.application.port.required.command.CreateUserCommand;
@@ -6,7 +6,7 @@ import com.lxp.auth.application.port.required.query.UserInfo;
 import com.lxp.auth.domain.common.exception.AuthErrorCode;
 import com.lxp.auth.domain.common.exception.AuthException;
 import com.lxp.auth.infrastructure.web.external.client.UserServiceFeignClient;
-import com.lxp.auth.infrastructure.web.external.dto.UserResponse;
+import com.lxp.auth.infrastructure.web.external.client.dto.UserResponse;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

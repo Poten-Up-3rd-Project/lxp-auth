@@ -1,4 +1,4 @@
-package com.lxp.auth.infrastructure.web.external.dto;
+package com.lxp.auth.infrastructure.web.external.client.dto;
 
 import java.util.List;
 

@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface LocalAuthReadRepository extends JpaRepository<LocalAuthJpaEntity, String> {
+public interface LocalAuthJpaReadRepository extends JpaRepository<LocalAuthJpaEntity, String> {
 
     @Query(value = """
         SELECT a.id as id, a.loginIdentifier as loginIndentifier, a.hashedPassword as hashedPassword
