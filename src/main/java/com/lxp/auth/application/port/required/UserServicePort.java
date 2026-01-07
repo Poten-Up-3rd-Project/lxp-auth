@@ -7,6 +7,6 @@ public interface UserServicePort {
 
     void createUser(CreateUserCommand command);
 
-    UserInfo getUserInfo(String userId);
+    UserInfo getUserInfoFromContext();
 
 }

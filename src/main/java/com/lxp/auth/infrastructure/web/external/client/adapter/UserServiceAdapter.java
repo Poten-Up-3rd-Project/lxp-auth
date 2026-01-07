@@ -10,6 +10,7 @@ import com.lxp.auth.infrastructure.web.external.client.dto.UserResponse;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -29,8 +30,8 @@ public class UserServiceAdapter implements UserServicePort {
 
     @Override
     @CircuitBreaker(name = "userService", fallbackMethod = "getUserInfoFallback")
-    public UserInfo getUserInfo(String userId) {
-        UserResponse response = userServiceFeignClient.getUserInfo(userId);
+    public UserInfo getUserInfoFromContext() {
+        UserResponse response = unwrapResponse(userServiceFeignClient.getUserInfo());
         return userServiceMapper.toUserInfo(response);
     }
 
@@ -42,5 +43,13 @@ public class UserServiceAdapter implements UserServicePort {
     private UserInfo getUserInfoFallback(String userId, Throwable t) {
         log.warn("CircuitBreaker fallback - getUserInfo: userId={}", userId, t);
         throw new AuthException(AuthErrorCode.EXTERNAL_SERVICE_ERROR, "User service is temporarily unavailable", t);
+    }
+
+    private <T> T unwrapResponse(ResponseEntity<T> response) {
+        if (!response.getStatusCode().is2xxSuccessful() || !response.hasBody() || response.getBody() == null) {
+            throw new AuthException(AuthErrorCode.EXTERNAL_SERVICE_ERROR);
+        }
+
+        return response.getBody();
     }
 }
