@@ -10,7 +10,7 @@ import java.util.Base64;
 @ConfigurationProperties(prefix = "passport.key")
 public class KeyProperties {
 
-    private String publicKeyString;
+    private final String publicKeyString;
 
     public KeyProperties(String publicKeyString) {
         this.publicKeyString = publicKeyString;

@@ -26,11 +26,14 @@ public class JwtTokenProvider implements JwtPolicy {
 
     public JwtTokenProvider(JwtConfig jwtConfig) {
         this.key = jwtConfig.jwtSecretKey();
-        this.accessTokenValidityInMilliseconds = jwtConfig.getAccessTokenValiditySeconds();
+        this.accessTokenValidityInMilliseconds = jwtConfig.getAccessTokenValidityMillis();
     }
 
     @Override
     public AuthTokenInfo createToken(TokenClaims claims) {
+        log.info("Creating token - userId: {}, email: {}, authorities: {}", 
+                 claims.userId(), claims.email(), claims.authorities());
+        
         long now = (new Date()).getTime();
         long expirationMillis = now + accessTokenValidityInMilliseconds;
         Date validity = new Date(expirationMillis);
@@ -46,6 +49,8 @@ public class JwtTokenProvider implements JwtPolicy {
             .expiration(validity)
             .signWith(key)
             .compact();
+        
+        log.info("Token created successfully. First 20 chars: {}...", token.substring(0, 20));
         return new AuthTokenInfo(token, expiresInSeconds);
     }
 

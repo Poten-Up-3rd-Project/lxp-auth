@@ -6,8 +6,10 @@ import com.lxp.auth.application.port.provided.usecase.LocalAuthLoginUseCase;
 import com.lxp.auth.application.port.required.AuthQueryPort;
 import com.lxp.auth.application.port.required.UserServicePort;
 import com.lxp.auth.application.port.required.query.AuthView;
-import com.lxp.auth.application.port.required.query.UserInfo;
+import com.lxp.auth.application.port.required.query.UserRoleQuery;
+import com.lxp.auth.domain.common.exception.AuthErrorCode;
 import com.lxp.auth.domain.common.exception.EmailNotFoundException;
+import com.lxp.auth.domain.common.exception.LoginFailureException;
 import com.lxp.auth.domain.common.model.vo.AuthTokenInfo;
 import com.lxp.auth.domain.common.model.vo.TokenClaims;
 import com.lxp.auth.domain.common.policy.JwtPolicy;
@@ -35,11 +37,15 @@ public class LocalAuthLoginService implements LocalAuthLoginUseCase {
         localAuthService.authenticate(new UserLoginSpec(
             command.email(), command.password(), authView.hashedPassword())
         );
-        UserInfo userInfo = userServicePort.getUserInfoFromContext();
+        UserRoleQuery query = userServicePort.getUserRole(authView.userId());
+
+        if (query.status().equals("DELETED")) {
+            throw new LoginFailureException(AuthErrorCode.ACCOUNT_DEACTIVATED);
+        }
 
         AuthTokenInfo token = jwtPolicy.createToken(
-            new TokenClaims(authView.userId().asString(), authView.loginIdentifier(), List.of(userInfo.role()))
+            new TokenClaims(authView.userId().asString(), authView.loginIdentifier(), List.of(query.role()))
         );
-        return new LoginResult(token.accessToken(), token.expiresIn(), authView.userId().asString(), userInfo.role());
+        return new LoginResult(token.accessToken(), token.expiresIn(), authView.userId().asString(), query.role());
     }
 }

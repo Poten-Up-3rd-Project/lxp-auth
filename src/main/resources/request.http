@@ -1,0 +1,13 @@
+# @no-cookie-jar
+POST http://localhost:8082/api-v1/auth/login
+Content-Type: application/json
+Cookie:
+
+{
+    "email" : "teacher@example.com",
+    "password" : "test1234",
+    "name": "test",
+    "role": "LEARNER",
+    "tagIds": [1, 2, 3],
+    "level": "MIDDLE"
+}
