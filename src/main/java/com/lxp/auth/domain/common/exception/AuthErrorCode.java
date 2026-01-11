@@ -47,7 +47,13 @@ public enum AuthErrorCode implements ErrorCode {
     /**
      * AUTH_009: 외부 서비스 통신 오류
      */
-    EXTERNAL_SERVICE_ERROR("INTERNAL_SERVER_ERROR", "AUTH_009", "외부 서비스 연동 중 오류가 발생했습니다.");
+    EXTERNAL_SERVICE_ERROR("INTERNAL_SERVER_ERROR", "AUTH_009", "외부 서비스 연동 중 오류가 발생했습니다."),
+
+    /**
+     * AUTH_010: 탈퇴(비활성화)된 사용자
+     */
+    ACCOUNT_DEACTIVATED("FORBIDDEN", "AUTH_010", "탈퇴(비활성화)된 사용자입니다."),
+    ;
 
     private final String group;
     private final String code;

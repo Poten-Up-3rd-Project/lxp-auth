@@ -8,16 +8,19 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class PassportAuthenticationFilter extends OncePerRequestFilter {
@@ -32,6 +35,7 @@ public class PassportAuthenticationFilter extends OncePerRequestFilter {
         throws ServletException, IOException {
 
         String encodedPassport = extractor.extract(request);
+        log.info("encodedPassport={}", encodedPassport);
 
         if (encodedPassport != null) {
             try {
@@ -39,17 +43,19 @@ public class PassportAuthenticationFilter extends OncePerRequestFilter {
 
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     claims.userId(),
-                    null,
+                    encodedPassport,
                     claims.roles().stream()
                         .map(SimpleGrantedAuthority::new)
                         .toList()
                 );
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                if (SecurityContextHolder.getContext().getAuthentication() == null) {
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
                 MDC.put("traceId", claims.traceId());
 
             } catch (Exception e) {
-                SecurityContextHolder.clearContext();
                 throw new BadCredentialsException("Invalid passport", e);
             }
         }
@@ -58,8 +64,12 @@ public class PassportAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } finally {
             MDC.clear();
-            SecurityContextHolder.clearContext();
         }
     }
 
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getRequestURI();
+        return path.startsWith("/api-v1/auth/register") || path.startsWith("/api-v1/auth/login");
+    }
 }

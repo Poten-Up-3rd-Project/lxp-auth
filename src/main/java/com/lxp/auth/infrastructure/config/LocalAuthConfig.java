@@ -1,10 +1,11 @@
 package com.lxp.auth.infrastructure.config;
 
+import com.lxp.auth.infrastructure.security.jwt.config.JwtConfig;
 import com.lxp.auth.infrastructure.web.external.passport.config.KeyProperties;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationPropertiesScan(basePackageClasses = {KeyProperties.class})
+@ConfigurationPropertiesScan(basePackageClasses = {KeyProperties.class, JwtConfig.class})
 public class LocalAuthConfig {
 }
