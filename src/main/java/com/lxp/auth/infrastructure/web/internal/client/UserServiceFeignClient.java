@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "userService", url = "${services.user-service.url}")
+@FeignClient(name = "userService", url = "${services.user.url}")
 public interface UserServiceFeignClient {
 
     @PostMapping("/internal/api-v1/users")
