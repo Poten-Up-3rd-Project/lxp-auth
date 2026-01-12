@@ -37,6 +37,11 @@ management:
     health:
       probes:
         enabled: true
+
+services:
+  user:
+    url: http://lxp-user:8080
+
 # 서버 포트
 server:
   port: 8080
