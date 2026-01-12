@@ -48,7 +48,7 @@ passport:
 
 jwt:
   secret-key: test-secret-key-for-unit-testing-purposes-only-minimum-32-characters-required
-  access-token-validity-seconds: 3600
+  access-token-validity-in-seconds: 3600
 
 internal:
   auth-token: auth-service-internal-token
