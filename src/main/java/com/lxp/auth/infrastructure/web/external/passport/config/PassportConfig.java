@@ -33,7 +33,7 @@ public class PassportConfig {
             )
             .addFilterBefore(passportFilter, UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api-v1/auth/register", "/api-v1/auth/login").permitAll()
+                .requestMatchers("/api-v1/auth/register", "/api-v1/auth/login", "/actuator/**").permitAll()
                 .anyRequest().authenticated()
             )
             .build();
