@@ -1,26 +1,26 @@
 package com.lxp.auth.infrastructure.web.external.passport.config;
 
+import com.lxp.auth.domain.common.support.AuthGuard;
+import io.jsonwebtoken.security.Keys;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-import java.security.KeyFactory;
-import java.security.PublicKey;
-import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 
+@Setter
+@Configuration
 @ConfigurationProperties(prefix = "passport.key")
 public class KeyProperties {
 
-    private final String publicKeyString;
+    private String secretKey;
 
-    public KeyProperties(String publicKeyString) {
-        this.publicKeyString = publicKeyString;
-    }
-
-    public PublicKey getPublicKey() throws Exception {
-        byte[] keyBytes = Base64.getDecoder().decode(publicKeyString);
-        X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
-        KeyFactory kf = KeyFactory.getInstance("RSA");
-        return kf.generatePublic(spec);
+    @Bean
+    public SecretKey passportSecretKey() {
+        AuthGuard.requireNonBlank(secretKey, "jwt secret key cannot be null or empty");
+        return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
 }

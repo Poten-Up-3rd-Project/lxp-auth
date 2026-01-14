@@ -13,7 +13,8 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.SecretKey;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -21,19 +22,21 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider implements JwtPolicy {
 
-    private final SecretKey key;
+    private final PublicKey publicKey;
+    private final PrivateKey privateKey;
     private final long accessTokenValidityInMilliseconds;
 
-    public JwtTokenProvider(JwtConfig jwtConfig) {
-        this.key = jwtConfig.jwtSecretKey();
+    public JwtTokenProvider(JwtConfig jwtConfig) throws Exception {
+        this.publicKey = jwtConfig.getPublicKey();
+        this.privateKey = jwtConfig.getPrivateKey();
         this.accessTokenValidityInMilliseconds = jwtConfig.getAccessTokenValidityMillis();
     }
 
     @Override
     public AuthTokenInfo createToken(TokenClaims claims) {
-        log.info("Creating token - userId: {}, email: {}, authorities: {}", 
-                 claims.userId(), claims.email(), claims.authorities());
-        
+        log.info("Creating token - userId: {}, email: {}, authorities: {}",
+            claims.userId(), claims.email(), claims.authorities());
+
         long now = (new Date()).getTime();
         long expirationMillis = now + accessTokenValidityInMilliseconds;
         Date validity = new Date(expirationMillis);
@@ -47,9 +50,9 @@ public class JwtTokenProvider implements JwtPolicy {
             .claim("userId", claims.userId())
             .claim("auth", authorities)
             .expiration(validity)
-            .signWith(key)
+            .signWith(privateKey)
             .compact();
-        
+
         log.info("Token created successfully. First 20 chars: {}...", token.substring(0, 20));
         return new AuthTokenInfo(token, expiresInSeconds);
     }
@@ -67,7 +70,7 @@ public class JwtTokenProvider implements JwtPolicy {
     @Override
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().verifyWith(key).build().parseSignedClaims(token);
+            Jwts.parser().verifyWith(publicKey).build().parseSignedClaims(token);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT Signature", e);
@@ -101,7 +104,7 @@ public class JwtTokenProvider implements JwtPolicy {
     private Claims parseClaims(String accessToken) {
         try {
             return Jwts.parser()
-                .verifyWith(key)
+                .verifyWith(publicKey)
                 .build()
                 .parseSignedClaims(accessToken)
                 .getPayload();

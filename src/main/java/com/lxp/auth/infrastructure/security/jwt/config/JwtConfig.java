@@ -1,29 +1,41 @@
 package com.lxp.auth.infrastructure.security.jwt.config;
 
-import com.lxp.auth.domain.common.support.AuthGuard;
-import io.jsonwebtoken.security.Keys;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-import javax.crypto.SecretKey;
-import java.nio.charset.StandardCharsets;
+import java.security.KeyFactory;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
 
-@Configuration
-@ConfigurationProperties(prefix = "jwt")
-@Setter
 @Slf4j
+@ConfigurationProperties(prefix = "jwt")
 public class JwtConfig {
 
-    private String secretKey;
-    private long accessTokenValidityInSeconds;
+    private final String publicKeyString;
+    private final String privateKeyString;
+    private final long accessTokenValidityInSeconds;
 
-    @Bean
-    public SecretKey jwtSecretKey() {
-        AuthGuard.requireNonBlank(secretKey, "jwt secret key cannot be null or empty");
-        return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+    public JwtConfig(String publicKeyString, String privateKeyString, long accessTokenValidityInSeconds) {
+        this.publicKeyString = publicKeyString;
+        this.privateKeyString = privateKeyString;
+        this.accessTokenValidityInSeconds = accessTokenValidityInSeconds;
+    }
+
+    public PublicKey getPublicKey() throws Exception {
+        byte[] keyBytes = Base64.getDecoder().decode(publicKeyString);
+        X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+        return kf.generatePublic(spec);
+    }
+
+    public PrivateKey getPrivateKey() throws Exception {
+        byte[] keyBytes = Base64.getDecoder().decode(privateKeyString);
+        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+        return kf.generatePrivate(spec);
     }
 
     public long getAccessTokenValidityMillis() {
