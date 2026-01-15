@@ -64,7 +64,7 @@ public class LocalAuthExternalController {
             .secure(false)
             .path(CookieConstants.DEFAULT_PATH)
             .maxAge(result.expiresIn())
-            .sameSite("Lax")
+            .sameSite("None")
             .build();
     }
 
@@ -74,7 +74,7 @@ public class LocalAuthExternalController {
             .secure(false)
             .path(CookieConstants.DEFAULT_PATH)
             .maxAge(0)
-            .sameSite("Lax")
+            .sameSite("None")
             .build();
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
     }
