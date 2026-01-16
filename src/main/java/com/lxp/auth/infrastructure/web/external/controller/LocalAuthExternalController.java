@@ -61,20 +61,20 @@ public class LocalAuthExternalController {
     private ResponseCookie createCookie(LoginResult result) {
         return ResponseCookie.from(CookieConstants.ACCESS_TOKEN_NAME, result.token())
             .httpOnly(CookieConstants.HTTP_ONLY)
-            .secure(false)
+            .secure(CookieConstants.SECURE)
             .path(CookieConstants.DEFAULT_PATH)
             .maxAge(result.expiresIn())
-            .sameSite("None")
+            .sameSite(CookieConstants.SAME_SITE)
             .build();
     }
 
     private void deleteCookie(HttpServletResponse response) {
         ResponseCookie cookie = ResponseCookie.from(CookieConstants.ACCESS_TOKEN_NAME, "") // 값은 비움
             .httpOnly(CookieConstants.HTTP_ONLY)
-            .secure(false)
+            .secure(CookieConstants.SECURE)
             .path(CookieConstants.DEFAULT_PATH)
             .maxAge(0)
-            .sameSite("None")
+            .sameSite(CookieConstants.SAME_SITE)
             .build();
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
     }
