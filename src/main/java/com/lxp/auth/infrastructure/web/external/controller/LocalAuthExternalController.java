@@ -39,7 +39,7 @@ public class LocalAuthExternalController {
 
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         response.setStatus(HttpServletResponse.SC_OK);
-        return ResponseEntity.ok(new LoginResponse(result.userId(), result.role()));
+        return ResponseEntity.ok(new LoginResponse(result.userId()));
     }
 
     @PostMapping("/register")
