@@ -46,6 +46,6 @@ public class LocalAuthLoginService implements LocalAuthLoginUseCase {
         AuthTokenInfo token = jwtPolicy.createToken(
             new TokenClaims(authView.userId().asString(), authView.loginIdentifier(), List.of(query.role()))
         );
-        return new LoginResult(token.accessToken(), token.expiresIn(), authView.userId().asString(), query.role());
+        return new LoginResult(token.accessToken(), token.expiresIn(), authView.userId().asString());
     }
 }
