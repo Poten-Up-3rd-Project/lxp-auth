@@ -7,6 +7,7 @@ plugins {
 ext {
     springCloudVersion = "2025.0.1"
     commonLibVersion = "v1.1.0"
+    passportLibVersion = "v1.1.6"
 }
 
 group = 'com.lxp'
@@ -56,6 +57,11 @@ dependencies {
     implementation "com.github.Poten-Up-3rd-Project.common-lib:common-domain:$commonLibVersion"
     implementation "com.github.Poten-Up-3rd-Project.common-lib:common-application:$commonLibVersion"
     implementation "com.github.Poten-Up-3rd-Project.common-lib:common-infrastructure:$commonLibVersion"
+
+    //passport
+    implementation "com.github.Poten-Up-3rd-Project.passport-lib:passport-core:$passportLibVersion"
+    implementation "com.github.Poten-Up-3rd-Project.passport-lib:passport-bean:$passportLibVersion"
+    implementation "com.github.Poten-Up-3rd-Project.passport-lib:passport-security:$passportLibVersion"
 
     //security
     implementation 'org.springframework.boot:spring-boot-starter-security'
