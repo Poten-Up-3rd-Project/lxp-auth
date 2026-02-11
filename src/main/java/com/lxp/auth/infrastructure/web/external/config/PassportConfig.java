@@ -1,7 +1,8 @@
-package com.lxp.auth.infrastructure.web.external.passport.config;
+package com.lxp.auth.infrastructure.web.external.config;
 
-import com.lxp.auth.infrastructure.web.external.passport.filter.PassportAuthenticationEntryPoint;
-import com.lxp.auth.infrastructure.web.external.passport.filter.PassportAuthenticationFilter;
+import com.lxp.passport.bean.filter.PassportFilter;
+import com.lxp.passport.security.filter.PassportAuthenticationEntryPoint;
+import com.lxp.passport.security.filter.PassportAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,10 +18,12 @@ import org.springframework.security.web.context.NullSecurityContextRepository;
 @RequiredArgsConstructor
 public class PassportConfig {
 
+    private final PassportFilter passportFilter;
+    private final PassportAuthenticationFilter passportAuthenticationFilter;
     private final PassportAuthenticationEntryPoint passportAuthenticationEntryPoint;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, PassportAuthenticationFilter passportFilter) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
             .csrf(AbstractHttpConfigurer::disable)
             .formLogin(AbstractHttpConfigurer::disable)
@@ -32,6 +35,7 @@ public class PassportConfig {
                 configurer.authenticationEntryPoint(passportAuthenticationEntryPoint)
             )
             .addFilterBefore(passportFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterAfter(passportAuthenticationFilter, PassportFilter.class)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api-v1/auth/register", "/api-v1/auth/login", "/actuator/**").permitAll()
                 .anyRequest().authenticated()
